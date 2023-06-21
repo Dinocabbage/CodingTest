@@ -1,37 +1,32 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public int solution(int k, ArrayList<Integer> ryanIndex) {
-        int answer = Integer.MAX_VALUE;
-
-        if(ryanIndex.size() >= k) {
-            for(int i = 0; i <= ryanIndex.size() - k; i++) {
-                answer = Math.min(answer, ryanIndex.get(i + k - 1) - ryanIndex.get(i) + 1);
-            }
-
-            return answer;
-        }
-
-        return -1;
-    }
 
     public static void main(String[] args) {
-        Main b = new Main();
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int k = sc.nextInt();
 
-        int[] dolls = new int[n];
-        ArrayList<Integer> ryanIndex = new ArrayList<>();
+        int[] ryanIndex = new int[n + 2];
+        int count = 0;
+        int answer = n + 1;
 
         for(int i = 0; i < n; i++) {
-            dolls[i] = sc.nextInt();
-            if(dolls[i] == 1) {
-                ryanIndex.add(i);
+
+            if(sc.nextInt() == 1) {
+                ryanIndex[count++] = i;
+
+                if(count >= k) {
+                    answer = Math.min(answer, ryanIndex[count - 1] - ryanIndex[count - k] + 1);
+                }
             }
         }
 
-        System.out.println(b.solution(k, ryanIndex));
+        if(answer == n + 1) {
+            System.out.println(-1);
+        }
+        else {
+            System.out.println(answer);
+        }
     }
 }
