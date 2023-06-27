@@ -1,12 +1,19 @@
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        while(sc.hasNext()) {
-            System.out.println(sc.nextLine());
+        String str;
+        while((str = br.readLine()) != null) {
+            bw.write(str);
+            bw.newLine();
+            bw.flush();
         }
+
+        bw.close();
+        br.close();
     }
 }
