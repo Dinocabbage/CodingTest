@@ -2,29 +2,20 @@ import java.io.*;
 
 public class Main {
     private static int N, count;
-    private static int[] queens;
+    private static int upperLimit;
 
-    public static void placeQueens(int row) {
-        if (row == N) {
+    public static void placeQueens(int row, int ld, int rd) {
+        if (row == upperLimit) {
             count++;
             return;
         }
 
-        for (int col = 0; col < N; col++) {
-            if (isPlaceable(row, col)) {
-                queens[row] = col;
-                placeQueens(row + 1);
-            }
+        int availablePositions = upperLimit & (~(row | ld | rd));
+        while (availablePositions > 0) {
+            int position = availablePositions & (-availablePositions);
+            availablePositions -= position;
+            placeQueens(row | position, (ld | position) << 1, (rd | position) >> 1);
         }
-    }
-
-    public static boolean isPlaceable(int row, int col) {
-        for (int i = 0; i < row; i++) {
-            if (queens[i] == col || Math.abs(queens[i] - col) == Math.abs(i - row)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static void main(String[] args) throws IOException {
@@ -32,10 +23,10 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
-        queens = new int[N];
         count = 0;
+        upperLimit = (1 << N) - 1;
 
-        placeQueens(0);
+        placeQueens(0, 0, 0);
 
         bw.write(String.valueOf(count));
         bw.flush();
