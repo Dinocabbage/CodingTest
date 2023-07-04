@@ -2,42 +2,28 @@ import java.io.*;
 
 public class Main {
     private static int N, count;
-    private static int[][] chessboard;
+    private static int[] queens;
 
-    private static void placeQueens(int col) {
-        if (col == N) {
+    public static void placeQueens(int row) {
+        if (row == N) {
             count++;
             return;
         }
 
-        for (int row = 0; row < N; row++) {
+        for (int col = 0; col < N; col++) {
             if (isPlaceable(row, col)) {
-                chessboard[row][col] = 1;
-                placeQueens(col + 1);
-                chessboard[row][col] = 0;
+                queens[row] = col;
+                placeQueens(row + 1);
             }
         }
     }
 
-    private static boolean isPlaceable(int row, int col) {
-        for (int i = 0; i < col; i++) {
-            if (chessboard[row][i] == 1) {
+    public static boolean isPlaceable(int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (queens[i] == col || Math.abs(queens[i] - col) == Math.abs(i - row)) {
                 return false;
             }
         }
-
-        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
-            if (chessboard[i][j] == 1) {
-                return false;
-            }
-        }
-
-        for (int i = row, j = col; i < N && j >= 0; i++, j--) {
-            if (chessboard[i][j] == 1) {
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -46,9 +32,9 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
-
-        chessboard = new int[N][N];
+        queens = new int[N];
         count = 0;
+
         placeQueens(0);
 
         bw.write(String.valueOf(count));
