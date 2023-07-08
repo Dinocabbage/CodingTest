@@ -5,25 +5,43 @@ import java.util.stream.Collectors;
 public class Main {
     private static int N;
     private static long max, min;
+    private static boolean isFind;
     private static char[] inequalitys;
 
-    public static void solution(int[] numbers, int index) {
+    public static void findMin(int[] numbers, int index) {
         if(index == N + 1) {
-            long number = Long.parseLong(Arrays.stream(numbers).mapToObj(String::valueOf).collect(Collectors.joining("")));
-            if(number > max) {
-                max = number;
-            }
-            if(number < min) {
-                min = number;
-            }
+            min = Long.parseLong(Arrays.stream(numbers).mapToObj(String::valueOf).collect(Collectors.joining("")));
+
+            isFind = true;
             return;
         }
 
-        for(int i = 0; i <= 9; i++) {
-            if(isPlaceable(numbers, i, index)) {
-                numbers[index] = i;
-                solution(numbers, index + 1);
-                numbers[index] = -1;
+        if(!isFind) {
+            for (int i = 0; i <= 9; i++) {
+                if (isPlaceable(numbers, i, index) && !isFind) {
+                    numbers[index] = i;
+                    findMin(numbers, index + 1);
+                    numbers[index] = -1;
+                }
+            }
+        }
+    }
+
+    public static void findMax(int[] numbers, int index) {
+        if(index == N + 1) {
+            max = Long.parseLong(Arrays.stream(numbers).mapToObj(String::valueOf).collect(Collectors.joining("")));
+
+            isFind = true;
+            return;
+        }
+
+        if(!isFind) {
+            for (int i = 9; i >= 0; i--) {
+                if (isPlaceable(numbers, i, index) && !isFind) {
+                    numbers[index] = i;
+                    findMax(numbers, index + 1);
+                    numbers[index] = -1;
+                }
             }
         }
     }
@@ -73,7 +91,14 @@ public class Main {
         int[] numbers = new int[N + 1];
         Arrays.fill(numbers, -1);
 
-        solution(numbers, 0);
+        isFind = false;
+        findMin(numbers, 0);
+
+        numbers = new int[N + 1];
+        Arrays.fill(numbers, -1);
+
+        isFind = false;
+        findMax(numbers, 0);
 
         if(String.valueOf(max).length() != N + 1) {
             bw.write("0" + max);
