@@ -13,6 +13,7 @@ public class Main {
         for(char c : word.toCharArray()) {
             if(c != word.charAt(right)) {
                 answer = 0;
+                break;
             }
             right--;
         }
