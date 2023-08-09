@@ -30,6 +30,10 @@ public class Main {
                     break;
                 }
             }
+            
+            if(answer == M) {
+                break;
+            }
 
             lt++;
         }
