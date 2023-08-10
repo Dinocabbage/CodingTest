@@ -14,32 +14,10 @@ public class Main {
             count++;
             sum += count;
         }
+        
+        int diff = sum - N;
 
-        int numerator = 0;
-        int denominator = 0;
-
-        if(count % 2 == 0) {
-            numerator = count;
-            denominator = 1;
-
-            while(sum > N) {
-                numerator--;
-                denominator++;
-                sum--;
-            }
-        }
-        else {
-            numerator = 1;
-            denominator = count;
-
-            while(sum > N) {
-                numerator++;
-                denominator--;
-                sum--;
-            }
-        }
-
-        bw.write(numerator + "/" + denominator);
+        bw.write(count % 2 == 0 ? (count - diff) + "/" + (1 + diff) : (1 + diff) + "/" + (count - diff));
 
         bw.flush();
         bw.close();
