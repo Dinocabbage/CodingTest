@@ -7,7 +7,12 @@ fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val bw = BufferedWriter(OutputStreamWriter(System.out))
 
-    bw.write(br.readLine().split(" ").map { it.toInt() }.sum().toString())
+    val input = br.readLine().split(" ")
+    val a = input[0].toInt()
+    val b = input[1].toInt()
+
+    bw.write((a + b).toString())
+
     bw.flush()
     bw.close()
     br.close()
