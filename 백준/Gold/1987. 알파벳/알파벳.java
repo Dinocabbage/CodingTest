@@ -5,32 +5,24 @@ public class Main {
     static int R, C, answer;
     static char[][] board;
     static int[] dr, dc;
+    static boolean[] visited;
 
-    public static void solution(int r, int c, String road) {
-        boolean isDuplicate = false;
+    public static void solution(int r, int c, int move) {
+        visited[board[r][c] - 'A'] = true;
+        answer = Math.max(answer, move);
 
-        for(char ch : road.toCharArray()) {
-            if(ch == board[r][c]) {
-                isDuplicate = true;
+        for (int i = 0; i < 4; i++) {
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+
+            if (nr >= 0 && nr < R && nc >= 0 && nc < C && !visited[board[nr][nc] - 'A']) {
+                solution(nr, nc, move + 1);
             }
         }
 
-        if(isDuplicate) {
-            answer = Math.max(answer, road.length());
-        }
-        else {
-            for(int i = 0 ; i < 4; i++) {
-                int nr = r + dr[i];
-                int nc = c + dc[i];
-
-                try {
-                    solution(nr, nc, road + board[r][c]);
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                }
-            }
-        }
+        visited[board[r][c] - 'A'] = false;
     }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -49,7 +41,9 @@ public class Main {
         dc = new int[] {0, 0, 1, -1};
         answer = 0;
 
-        solution(0, 0,  "");
+        visited = new boolean[26];
+
+        solution(0, 0, 1);
 
         bw.write(String.valueOf(answer));
 
