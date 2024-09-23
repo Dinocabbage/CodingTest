@@ -3,21 +3,21 @@ import java.util.Arrays;
 
 public class Main {
     private static int findCreator(int N) {
-        int answer = 0;
-
         for(int i = 1; i < N; i++) {
-            int[] arr = Arrays.stream(String.valueOf(i).split("")).mapToInt(Integer::parseInt).toArray();
+            int sum = i;
+            int temp = i;
 
-            int sum = i + Arrays.stream(arr).sum();
+            while(temp > 0) {
+                sum += temp % 10;
+                temp /= 10;
+            }
 
             if(sum == N) {
-                answer = i;
-
-                break;
+                return i;
             }
         }
 
-        return answer;
+        return 0;
     }
 
     public static void main(String[] args) throws IOException {
