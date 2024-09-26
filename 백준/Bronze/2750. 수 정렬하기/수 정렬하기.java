@@ -16,10 +16,13 @@ public class Main {
 
         Arrays.sort(numbers);
 
-        for(int i = 0; i < N; i++) {
-            bw.write(String.valueOf(numbers[i]));
-            bw.newLine();
+        StringBuilder sb = new StringBuilder();
+
+        for(int i : numbers) {
+            sb.append(i).append("\n");
         }
+
+        bw.write(sb.toString());
 
         bw.flush();
         bw.close();
