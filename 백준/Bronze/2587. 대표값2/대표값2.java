@@ -17,7 +17,7 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(Arrays.stream(numbers).sum() / 5).append("\n");
+        sb.append((int)Arrays.stream(numbers).average().orElse(0)).append("\n");
 
         sb.append(numbers[2]);
 
