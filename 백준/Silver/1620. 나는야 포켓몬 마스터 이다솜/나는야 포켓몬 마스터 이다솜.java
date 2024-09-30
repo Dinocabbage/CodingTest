@@ -11,28 +11,18 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Map<String, Integer> keyName = new HashMap<>();
-        Map<Integer, String> keyNumber = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         for(int i = 1; i <= N; i++) {
             String name = br.readLine();
-            keyName.put(name, i);
-            keyNumber.put(i, name);
+            map.put(name, String.valueOf(i));
+            map.put(String.valueOf(i), name);
         }
 
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < M; i++) {
-            String input = br.readLine();
-
-            try {
-                int parsingInput = Integer.parseInt(input);
-
-                sb.append(keyNumber.get(parsingInput)).append("\n");
-            }
-            catch(NumberFormatException e) {
-                sb.append(keyName.get(input)).append("\n");
-            }
+            sb.append(map.get(br.readLine())).append("\n");
         }
 
         bw.write(sb.toString());
